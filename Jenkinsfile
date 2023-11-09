@@ -1,30 +1,37 @@
 pipeline {
-    agent any
-
-    stages {
+  agent any
+  stages {
+    stage('Build') {
+      parallel {
         stage('Build') {
-            steps {
-                dir('C:/Users/sqkswong/Downloads/Jenkins/build.bat'){
-                    /* execute commands in the scripts directory */
-                }
-                bat 'C:/Users/sqkswong/Downloads/Jenkins/build.bat'
-            }
+          steps {
+            dir(path: 'C:/Users/sqkswong/Downloads/Jenkins/build.bat')
+            bat 'C:/Users/sqkswong/Downloads/Jenkins/build.bat'
+          }
         }
+
         stage('Test') {
-            steps {
-                dir('C:/Users/sqkswong/Downloads/Jenkins/test.bat'){
-                    /* execute commands in the scripts directory */
-                }
-                bat 'C:/Users/sqkswong/Downloads/Jenkins/test.bat'
-            }
+          steps {
+            echo 'Test ok'
+          }
         }
-        stage('Publish') {
-            steps {
-                dir('C:/Users/sqkswong/Downloads/Jenkins/publish.bat'){
-                    /* execute commands in the scripts directory */
-                }
-                bat 'C:/Users/sqkswong/Downloads/Jenkins/publish.bat'
-            }
-        }
+
+      }
     }
+
+    stage('Test') {
+      steps {
+        dir(path: 'C:/Users/sqkswong/Downloads/Jenkins/test.bat')
+        bat 'C:/Users/sqkswong/Downloads/Jenkins/test.bat'
+      }
+    }
+
+    stage('Publish') {
+      steps {
+        dir(path: 'C:/Users/sqkswong/Downloads/Jenkins/publish.bat')
+        bat 'C:/Users/sqkswong/Downloads/Jenkins/publish.bat'
+      }
+    }
+
+  }
 }
